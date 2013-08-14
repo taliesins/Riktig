@@ -35,6 +35,7 @@
         public Guid CorrelationId { get; private set; }
         public IServiceBus Bus { get; set; }
 
+        public State CurrentState { get; set; }
 
         /// <summary>
         /// When the image was last retrieved

@@ -7,21 +7,33 @@
     using Contracts.Services.Events;
     using Magnum.Extensions;
     using MassTransit;
+    using Topshelf.Logging;
 
 
     public class RetrieveImageConsumer :
         Consumes<RetrieveImage>.Context
     {
+        static readonly LogWriter _log = HostLogger.Get<RetrieveImageConsumer>();
+
         public void Consume(IConsumeContext<RetrieveImage> context)
         {
+            var sourceAddress = context.Message.SourceAddress;
+
+            _log.DebugFormat("Retrieve Image: {0}", sourceAddress);
+
             try
             {
                 using (var client = new HttpClient())
                 {
-                    HttpResponseMessage response = client.GetAsync(context.SourceAddress).Result;
+                    HttpResponseMessage response = client.GetAsync(sourceAddress).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         string localFileName = Path.GetFullPath(NewId.NextGuid().ToString());
+                        var contentLocation = response.Content.Headers.ContentLocation ?? sourceAddress;
+                        if (Path.HasExtension(contentLocation.AbsoluteUri))
+                            localFileName += Path.GetExtension(contentLocation.AbsoluteUri);
+
+                        _log.DebugFormat("Success, copying to local file: {0}", localFileName);
 
                         using (FileStream stream = File.Create(localFileName))
                         {
@@ -31,12 +43,12 @@
                                 stream.Close();
 
                                 var fileInfo = new FileInfo(localFileName);
-
-
                                 var localAddress = new Uri(fileInfo.FullName);
 
+                                _log.DebugFormat("Completed, length = {0}", fileInfo.Length);
+
                                 context.Bus.Publish(new ImageRetrievedEvent(context.Message.CommandId,
-                                    context.Message.SourceAddress, localAddress,
+                                    sourceAddress, localAddress,
                                     response.Content.Headers.ContentType.ToString(), (int)fileInfo.Length));
                             }
                         }
@@ -46,20 +58,26 @@
                         string message = string.Format("Server returned a response status code: {0} ({1})",
                             (int)response.StatusCode, response.StatusCode);
 
+                        _log.ErrorFormat("Failed to retrieve image: {0}", message);
+
                         context.Bus.Publish(new ImageNotFoundEvent(context.Message.CommandId,
-                            context.Message.SourceAddress, message));
+                            sourceAddress, message));
                     }
                 }
             }
             catch (AggregateException exception)
             {
+                _log.Error("Exception from HttpClient", exception.InnerException);
+
                 context.Bus.Publish(new ImageRetrievalFailedEvent(context.Message.CommandId,
-                    context.Message.SourceAddress, exception.InnerException.Message));
+                    sourceAddress, exception.InnerException.Message));
             }
             catch (Exception exception)
             {
+                _log.Error("Exception from HttpClient", exception);
+
                 context.Bus.Publish(new ImageRetrievalFailedEvent(context.Message.CommandId,
-                    context.Message.SourceAddress, exception.Message));
+                    sourceAddress, exception.Message));
             }
         }
 

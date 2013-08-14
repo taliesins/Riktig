@@ -5,11 +5,14 @@
     using Contracts.Api;
     using Contracts.Services.Events;
     using MassTransit;
+    using MassTransit.Logging;
 
 
     public class ImageRetrievalStateMachine :
         AutomatonymousStateMachine<ImageRetrievalState>
     {
+        static readonly ILog _log = Logger.Get<ImageRetrievalStateMachine>();
+
         readonly Uri _imageRetrievalServiceAddress;
 
         public ImageRetrievalStateMachine(Uri imageRetrievalServiceAddress)
@@ -29,6 +32,8 @@
                 When(Requested)
                     .Then((state, message) =>
                         {
+                            _log.DebugFormat("Requested: {0} ({1})", message.SourceAddress, message.RequestId);
+
                             state.Created = DateTime.UtcNow;
                             state.FirstRequested = message.Timestamp;
                             state.SourceAddress = message.SourceAddress;
@@ -46,6 +51,8 @@
                 When(Retrieved)
                     .Then((state, message) =>
                         {
+                            _log.DebugFormat("Retrieved: {0} ({1})", message.LocalAddress, state.CorrelationId);
+
                             state.LastRetrieved = message.Timestamp;
                             state.LocalAddress = message.LocalAddress;
                             state.ContentType = message.ContentType;

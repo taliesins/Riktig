@@ -19,6 +19,13 @@
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ServiceBusConfig.RegisterServiceBus();
+        }
+
+        protected void Application_End()
+        {
+            ServiceBusConfig.StopServiceBus();
         }
     }
 }
