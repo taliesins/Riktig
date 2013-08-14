@@ -53,6 +53,12 @@
                                     // specify non-CorrelationId based correlation for the events
                                     r.Correlate(_machine.Retrieved,
                                         (state, message) => state.SourceAddress == message.SourceAddress);
+
+                                    r.Correlate(_machine.NotFound,
+                                        (state, message) => state.SourceAddress == message.SourceAddress);
+
+                                    r.Correlate(_machine.RetrieveFailed,
+                                        (state, message) => state.SourceAddress == message.SourceAddress);
                                 });
                         });
                 });
