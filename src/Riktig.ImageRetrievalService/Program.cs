@@ -19,7 +19,7 @@
             Log4NetLogger.Use();
 
             // simple but effective, this should be configuration settings of course
-            var address = new Uri("rabbitmq://localhost/riktig-coordinationservice");
+            var address = new Uri("rabbitmq://localhost/riktig-imageretrievalservice");
 
             return (int)HostFactory.Run(x =>
                 {

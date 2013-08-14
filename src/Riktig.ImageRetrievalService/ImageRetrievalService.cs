@@ -41,6 +41,8 @@
 
         public bool Stop(HostControl hostControl)
         {
+            _bus.Dispose();
+
             return true;
         }
     }
