@@ -13,11 +13,11 @@
     {
         static readonly ILog _log = Logger.Get<ImageRetrievalStateMachine>();
 
-        readonly Uri _imageRetrievalServiceAddress;
+        readonly IStateMachineActivityFactory<ImageRetrievalState> _activityFactory;
 
-        public ImageRetrievalStateMachine(Uri imageRetrievalServiceAddress)
+        public ImageRetrievalStateMachine(IStateMachineActivityFactory<ImageRetrievalState> activityFactory)
         {
-            _imageRetrievalServiceAddress = imageRetrievalServiceAddress;
+            _activityFactory = activityFactory;
 
             State(() => Pending);
             State(() => Available);
@@ -38,7 +38,7 @@
                             state.FirstRequested = message.Timestamp;
                             state.SourceAddress = message.SourceAddress;
                         })
-                    .Then(() => new SendRetrieveImageCommandActivity(_imageRetrievalServiceAddress))
+                    .Then(() => _activityFactory.GetActivity<SendRetrieveImageCommandActivity>())
                     .Publish((_, message) => new ImageRequestedEvent(message.RequestId, message.SourceAddress))
                     .TransitionTo(Pending));
 
@@ -46,10 +46,9 @@
                 // this is to handle the contract of publishing the event but an existing request is 
                 // already pending
                 When(Requested)
-                    .Then((state, message) =>
-                    {
-                        _log.DebugFormat("Pending: {0} ({1})", state.SourceAddress, message.RequestId);
-                    })
+                    .Then(
+                        (state, message) =>
+                            { _log.DebugFormat("Pending: {0} ({1})", state.SourceAddress, message.RequestId); })
                     .Publish((_, message) => new ImageRequestedEvent(message.RequestId, message.SourceAddress)),
                 // this event is observed when the service completes the image retrieval
                 When(Retrieved)
@@ -72,10 +71,10 @@
             During(Available,
                 When(Requested)
                     .Then((state, message) =>
-                    {
-                        _log.DebugFormat("Available: {0} {2} ({1})", state.LocalAddress, message.RequestId,
-                            state.SourceAddress);
-                    })
+                        {
+                            _log.DebugFormat("Available: {0} {2} ({1})", state.LocalAddress, message.RequestId,
+                                state.SourceAddress);
+                        })
                     .Publish((_, message) => new ImageRequestedEvent(message.RequestId, message.SourceAddress))
                     .Publish((state, message) =>
                              new ImageRequestCompletedEvent(state.ContentLength.Value, state.ContentType,

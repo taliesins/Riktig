@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="ImageRetrievalState.cs" />
     <Compile Include="ImageRetrievalStateMachine.cs" />
+    <Compile Include="IStateMachineActivityFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendRetrieveImageCommandActivity.cs" />
   </ItemGroup>

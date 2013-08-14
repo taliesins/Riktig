@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.1.1\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Automatonymous">
       <HintPath>..\packages\Automatonymous.1.0.0\lib\net40\Automatonymous.dll</HintPath>
     </Reference>
@@ -78,7 +81,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutofacStateMachineActivityFactory.cs" />
     <Compile Include="CoordinationService.cs" />
+    <Compile Include="CoordinationServiceBootstrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
