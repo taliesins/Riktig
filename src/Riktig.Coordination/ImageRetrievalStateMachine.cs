@@ -46,6 +46,10 @@
                 // this is to handle the contract of publishing the event but an existing request is 
                 // already pending
                 When(Requested)
+                    .Then((state, message) =>
+                    {
+                        _log.DebugFormat("Pending: {0} ({1})", state.SourceAddress, message.RequestId);
+                    })
                     .Publish((_, message) => new ImageRequestedEvent(message.RequestId, message.SourceAddress)),
                 // this event is observed when the service completes the image retrieval
                 When(Retrieved)
@@ -67,6 +71,11 @@
 
             During(Available,
                 When(Requested)
+                    .Then((state, message) =>
+                    {
+                        _log.DebugFormat("Available: {0} {2} ({1})", state.LocalAddress, message.RequestId,
+                            state.SourceAddress);
+                    })
                     .Publish((_, message) => new ImageRequestedEvent(message.RequestId, message.SourceAddress))
                     .Publish((state, message) =>
                              new ImageRequestCompletedEvent(state.ContentLength.Value, state.ContentType,

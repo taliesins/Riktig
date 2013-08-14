@@ -29,6 +29,14 @@
 }
 
 <div>
+    @Ajax.ActionLink("Cat", "Request", new { SourceAddress = new Uri("http://i.imgur.com/Iroma7d.png")},new AjaxOptions {HttpMethod = "POST"})
+    <br/>
+    @Ajax.ActionLink("Good Dog", "Request", new { SourceAddress = new Uri("http://i.imgur.com/NK8eZUe.jpg")},new AjaxOptions {HttpMethod = "POST"})
+</div>
+
+
+<div>
+    <br/>
     @Html.ActionLink("Back to Pending Images", "Index")
 </div>
 
