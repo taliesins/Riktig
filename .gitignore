@@ -6,6 +6,8 @@ build_output/*
 **/*.user
 **/**/*.user
 
+NuGet.exe
+
 bin
 obj
 _ReSharper*
