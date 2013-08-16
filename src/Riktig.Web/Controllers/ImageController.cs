@@ -1,8 +1,13 @@
 ﻿namespace Riktig.Web.Controllers
 {
     using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Contracts.Api;
+    using Magnum.Extensions;
     using MassTransit;
     using Models;
 
@@ -19,17 +24,9 @@
         }
 
         //
-        // GET: /Image/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
         // GET: /Image/Create
 
-        public ActionResult Request()
+        public ActionResult RequestImage()
         {
             return View();
         }
@@ -38,7 +35,7 @@
         // POST: /Image/Create
 
         [HttpPost]
-        public ActionResult Request(ImageViewModel model)
+        public ActionResult RequestImage(ImageViewModel model)
         {
             try
             {
@@ -54,6 +51,50 @@
         }
 
 
+
+        public ActionResult GetImages()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Image/Create
+
+        [HttpPost]
+        public async Task<ActionResult> GetImages(GetImagesViewModel model)
+        {
+            try
+            {
+                var endpoint = Bus.Instance.GetEndpoint(ServiceBusConfig.ImageServiceAddress);
+
+                var results = new ConcurrentBag<Uri>();
+
+                var requests = model.SourceAddress
+                    .Where(x => !string.IsNullOrEmpty(x) && Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute))
+                    .Select(address =>
+                    {
+                        return endpoint.SendRequestAsync(Bus.Instance, new RequestImageCommand(new Uri(address)), x =>
+                            {
+                                x.Handle<ImageRequestCompleted>(msg =>
+                                    {
+                                        results.Add(msg.LocalAddress);
+                                    });
+                                x.Handle<ImageRequestFaulted>(msg => { });
+                                x.HandleTimeout(30.Seconds(), () => { });
+                            }).Task;
+                    });
+
+                return await Task.WhenAll(requests)
+                    .ContinueWith(tasks =>
+                        {
+                            return Json(results);
+                        });
+            }
+            catch
+            {
+                return View();
+            }
+        }
         class RequestImageCommand :
             RequestImage
         {

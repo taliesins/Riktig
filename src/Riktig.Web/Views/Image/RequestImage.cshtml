@@ -7,7 +7,7 @@
 <h2>Request Image</h2>
 
 
-@using (Html.BeginForm("Request", "Image")) {
+@using (Html.BeginForm("RequestImage", "Image")) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -29,9 +29,9 @@
 }
 
 <div>
-    @Ajax.ActionLink("Cat", "Request", new { SourceAddress = new Uri("http://i.imgur.com/Iroma7d.png")},new AjaxOptions {HttpMethod = "POST"})
+    @Ajax.ActionLink("Cat", "RequestImage", new { SourceAddress = new Uri("http://i.imgur.com/Iroma7d.png")},new AjaxOptions {HttpMethod = "POST"})
     <br/>
-    @Ajax.ActionLink("Good Dog", "Request", new { SourceAddress = new Uri("http://i.imgur.com/NK8eZUe.jpg")},new AjaxOptions {HttpMethod = "POST"})
+    @Ajax.ActionLink("Good Dog", "RequestImage", new { SourceAddress = new Uri("http://i.imgur.com/NK8eZUe.jpg")},new AjaxOptions {HttpMethod = "POST"})
 </div>
 
 

@@ -76,7 +76,7 @@
                                 state.SourceAddress);
                         })
                     .Publish((_, message) => new ImageRequestedEvent(message.RequestId, message.SourceAddress))
-                    .Publish((state, message) =>
+                    .Respond((state, message) =>
                              new ImageRequestCompletedEvent(state.ContentLength.Value, state.ContentType,
                                  state.LocalAddress, state.SourceAddress, state.LastRetrieved.Value)));
         }
