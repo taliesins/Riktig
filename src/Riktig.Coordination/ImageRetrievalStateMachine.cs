@@ -2,10 +2,12 @@
 {
     using System;
     using Automatonymous;
+    using Automatonymous.RepositoryConfigurators;
     using Contracts.Api;
     using Contracts.Services.Events;
     using MassTransit;
     using MassTransit.Logging;
+    using RapidTransit.Core;
 
 
     public class ImageRetrievalStateMachine :
@@ -13,9 +15,9 @@
     {
         static readonly ILog _log = Logger.Get<ImageRetrievalStateMachine>();
 
-        readonly IStateMachineActivityFactory<ImageRetrievalState> _activityFactory;
+        readonly IStateMachineActivityFactory _activityFactory;
 
-        public ImageRetrievalStateMachine(IStateMachineActivityFactory<ImageRetrievalState> activityFactory)
+        public ImageRetrievalStateMachine(IStateMachineActivityFactory activityFactory)
         {
             _activityFactory = activityFactory;
 
@@ -38,7 +40,7 @@
                             state.FirstRequested = message.Timestamp;
                             state.SourceAddress = message.SourceAddress;
                         })
-                    .Then(() => _activityFactory.GetActivity<SendRetrieveImageCommandActivity>())
+                    .Then(() => _activityFactory.GetActivity<SendRetrieveImageCommandActivity, ImageRetrievalState>())
                     .Publish((_, message) => new ImageRequestedEvent(message.RequestId, message.SourceAddress))
                     .TransitionTo(Pending));
 
@@ -91,6 +93,18 @@
         public Event<ImageRetrievalFailed> RetrieveFailed { get; private set; }
         public Event<ImageNotFound> NotFound { get; private set; }
 
+        public void ConfigureStateMachineCorrelations(StateMachineSagaRepositoryConfigurator<ImageRetrievalState> r)
+        {
+            r.Correlate(Requested, (state, message) => state.SourceAddress == message.SourceAddress)
+             .SelectCorrelationId(message => message.RequestId);
+
+            r.Correlate(Retrieved, (state, message) => state.SourceAddress == message.SourceAddress);
+
+            r.Correlate(NotFound, (state, message) => state.SourceAddress == message.SourceAddress);
+
+            r.Correlate(RetrieveFailed, (state, message) => state.SourceAddress == message.SourceAddress);
+        }
+
 
         class ImageRequestCompletedEvent :
             ImageRequestCompleted
@@ -137,7 +151,7 @@
         }
 
 
-        public class ImageRequestedEvent :
+        class ImageRequestedEvent :
             ImageRequested
         {
             public ImageRequestedEvent(Guid originatingCommandId, Uri sourceAddress)

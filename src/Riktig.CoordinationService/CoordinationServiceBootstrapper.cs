@@ -1,51 +1,31 @@
 ﻿namespace Riktig.CoordinationService
 {
-    using System;
     using Autofac;
-    using Coordination;
-    using Topshelf;
-    using Topshelf.Logging;
+    using RapidTransit.Integration;
+    using RapidTransit.Integration.Services;
+    using RapidTransit.Integration.Services.QuartzIntegration;
     using Topshelf.Runtime;
 
 
     public class CoordinationServiceBootstrapper :
-        IDisposable
+        TopshelfServiceBootstrapper<CoordinationServiceBootstrapper>
     {
-        readonly IContainer _container;
-        readonly LogWriter _log = HostLogger.Get<CoordinationServiceBootstrapper>();
-
-        public CoordinationServiceBootstrapper(HostSettings hostSettings, Uri serviceAddress, Uri address)
+        public CoordinationServiceBootstrapper(HostSettings hostSettings)
+            : base(hostSettings)
         {
-            _log.InfoFormat("Configuring Service Container");
-
-            var builder = new ContainerBuilder();
-
-            builder.RegisterInstance(hostSettings);
-
-            builder.RegisterType<SendRetrieveImageCommandActivity>()
-                   .WithParameter(new TypedParameter(typeof(Uri), serviceAddress));
-
-            builder.RegisterGeneric(typeof(AutofacStateMachineActivityFactory<>))
-                   .As(typeof(IStateMachineActivityFactory<>));
-
-            builder.RegisterType<ImageRetrievalStateMachine>()
-                   .SingleInstance();
-
-            builder.RegisterType<CoordinationService>()
-                .WithParameter(new TypedParameter(typeof(Uri), address));
-
-            _container = builder.Build();
         }
 
-        public void Dispose()
+        protected override void ConfigureContainer(ContainerBuilder builder)
         {
-            _container.Dispose();
-        }
+            builder.RegisterModule<ServiceConfigurationProviderModule>();
+            builder.RegisterModule<RabbitMqConfigurationModule>();
+            builder.RegisterModule<HostServiceBusModule>();
 
-        public T GetService<T>()
-            where T : ServiceControl
-        {
-            return _container.Resolve<T>();
+            builder.RegisterType<ImageRetrievalTrackingServiceBootstrapper>()
+                   .As<IServiceBootstrapper>();
+
+            builder.RegisterType<MessageSchedulingServiceBootstrapper>()
+                   .As<IServiceBootstrapper>();
         }
     }
 }

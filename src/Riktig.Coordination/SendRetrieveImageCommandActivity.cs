@@ -10,11 +10,11 @@
     public class SendRetrieveImageCommandActivity :
         Activity<ImageRetrievalState>
     {
-        readonly Uri _imageRetrievalServiceAddress;
+        readonly SendRetrieveImageCommandSettings _settings;
 
-        public SendRetrieveImageCommandActivity(Uri imageRetrievalServiceAddress)
+        public SendRetrieveImageCommandActivity(SendRetrieveImageCommandSettings settings)
         {
-            _imageRetrievalServiceAddress = imageRetrievalServiceAddress;
+            _settings = settings;
         }
 
         public void Accept(StateMachineInspector inspector)
@@ -38,7 +38,7 @@
                 {
                     Uri faultAddress = instance.Bus.Endpoint.Address.Uri;
 
-                    IEndpoint endpoint = instance.Bus.GetEndpoint(_imageRetrievalServiceAddress);
+                    IEndpoint endpoint = instance.Bus.GetEndpoint(_settings.ImageRetrievalServiceAddress);
 
                     endpoint.Send(new RetrieveImageCommand(instance.SourceAddress),
                         x => x.SetFaultAddress(faultAddress));

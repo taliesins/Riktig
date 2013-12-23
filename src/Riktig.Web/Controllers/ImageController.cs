@@ -10,11 +10,21 @@
     using Magnum.Extensions;
     using MassTransit;
     using Models;
+    using RapidTransit.Core;
 
 
-    public class ImageController : 
+    public class ImageController :
         Controller
     {
+        readonly IServiceBus _bus;
+        readonly ImageServiceSettings _settings;
+
+        public ImageController(IHostServiceBus bus, ImageServiceSettings settings)
+        {
+            _bus = bus;
+            _settings = settings;
+        }
+
         //
         // GET: /Image/
 
@@ -39,8 +49,8 @@
         {
             try
             {
-                Bus.Instance.GetEndpoint(ServiceBusConfig.ImageServiceAddress)
-                   .Send(new RequestImageCommand(new Uri(model.SourceAddress)));
+                _bus.GetEndpoint(_settings.ImageTrackingServiceAddress)
+                    .Send(new RequestImageCommand(new Uri(model.SourceAddress)));
 
                 return RedirectToAction("Index");
             }
@@ -49,7 +59,6 @@
                 return View();
             }
         }
-
 
 
         public ActionResult GetImages()
@@ -65,36 +74,38 @@
         {
             try
             {
-                var endpoint = Bus.Instance.GetEndpoint(ServiceBusConfig.ImageServiceAddress);
+                IEndpoint endpoint = _bus.GetEndpoint(_settings.ImageTrackingServiceAddress);
 
                 var results = new ConcurrentBag<Uri>();
 
-                var requests = model.SourceAddress
-                    .Where(x => !string.IsNullOrEmpty(x) && Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute))
-                    .Select(address =>
-                    {
-                        return endpoint.SendRequestAsync(Bus.Instance, new RequestImageCommand(new Uri(address)), x =>
-                            {
-                                x.Handle<ImageRequestCompleted>(msg =>
-                                    {
-                                        results.Add(msg.LocalAddress);
-                                    });
-                                x.Handle<ImageRequestFaulted>(msg => { });
-                                x.HandleTimeout(30.Seconds(), () => { });
-                            }).Task;
-                    });
+                IEnumerable<Task> requests = model.SourceAddress
+                                                  .Where(
+                                                      x =>
+                                                      !string.IsNullOrEmpty(x)
+                                                      && Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute))
+                                                  .Select(address =>
+                                                      {
+                                                          return
+                                                              endpoint.SendRequestAsync(_bus,
+                                                                  new RequestImageCommand(new Uri(address)), x =>
+                                                                      {
+                                                                          x.Handle<ImageRequestCompleted>(
+                                                                              msg => { results.Add(msg.LocalAddress); });
+                                                                          x.Handle<ImageRequestFaulted>(msg => { });
+                                                                          x.HandleTimeout(30.Seconds(), () => { });
+                                                                      }).Task;
+                                                      });
 
                 return await Task.WhenAll(requests)
-                    .ContinueWith(tasks =>
-                        {
-                            return Json(results);
-                        });
+                                 .ContinueWith(tasks => { return Json(results); });
             }
             catch
             {
                 return View();
             }
         }
+
+
         class RequestImageCommand :
             RequestImage
         {
