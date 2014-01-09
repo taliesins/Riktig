@@ -5,10 +5,10 @@
     using RapidTransit.Core.Services;
 
 
-    public class ImageRetrievalConsumerBusHost :
-        ServiceBusHost
+    public class ImageRetrievalConsumerBusInstance :
+        ServiceBusInstance
     {
-        public ImageRetrievalConsumerBusHost(IConfigurationProvider configuration,
+        public ImageRetrievalConsumerBusInstance(IConfigurationProvider configuration,
             IConsumerFactory<RetrieveImageConsumer> consumerFactory)
             : base(configuration, "ImageRetrievalServiceQueueName", "ImageRetrievalServiceConsumerLimit", 1)
         {

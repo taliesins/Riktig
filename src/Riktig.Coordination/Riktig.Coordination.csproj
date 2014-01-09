@@ -32,21 +32,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Automatonymous, Version=1.2.39.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+    <Reference Include="Automatonymous, Version=1.2.42.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\RapidTransit\src\packages\Automatonymous.1.2.2\lib\net40\Automatonymous.dll</HintPath>
+      <HintPath>..\..\..\RapidTransit\src\packages\Automatonymous.1.2.5\lib\net40\Automatonymous.dll</HintPath>
     </Reference>
-    <Reference Include="Automatonymous.MassTransitIntegration, Version=1.2.39.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+    <Reference Include="Automatonymous.MassTransitIntegration, Version=1.2.42.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\RapidTransit\src\packages\Automatonymous.MassTransit.1.2.2\lib\net40\Automatonymous.MassTransitIntegration.dll</HintPath>
+      <HintPath>..\..\..\RapidTransit\src\packages\Automatonymous.MassTransit.1.2.5\lib\net40\Automatonymous.MassTransitIntegration.dll</HintPath>
     </Reference>
-    <Reference Include="Magnum, Version=2.1.1.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+    <Reference Include="Magnum, Version=2.1.2.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\RapidTransit\src\packages\Magnum.2.1.1\lib\NET40\Magnum.dll</HintPath>
+      <HintPath>..\..\..\RapidTransit\src\packages\Magnum.2.1.2\lib\NET40\Magnum.dll</HintPath>
     </Reference>
     <Reference Include="MassTransit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\RapidTransit\src\packages\MassTransit.2.9.2\lib\net40\MassTransit.dll</HintPath>
+      <HintPath>..\..\..\RapidTransit\src\packages\MassTransit.2.9.5\lib\net40\MassTransit.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

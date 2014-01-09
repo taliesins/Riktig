@@ -10,7 +10,7 @@
 
 
     public class ImageRetrievalTrackingServiceBootstrapper :
-        ServiceBusHostServiceBootstrapper
+        ServiceBusInstanceServiceBootstrapper
     {
         public ImageRetrievalTrackingServiceBootstrapper(ILifetimeScope lifetimeScope)
             : base(lifetimeScope, typeof(ImageRetrievalTrackingServiceBootstrapper))
@@ -36,8 +36,8 @@
             builder.RegisterType<ImageRetrievalStateMachine>()
                    .SingleInstance();
 
-            builder.RegisterType<ImageRetrievalStateBusHost>()
-                   .As<IServiceBusHost>();
+            builder.RegisterType<ImageRetrievalStateBusInstance>()
+                   .As<IServiceBusInstance>();
 
             base.ConfigureLifetimeScope(builder);
         }

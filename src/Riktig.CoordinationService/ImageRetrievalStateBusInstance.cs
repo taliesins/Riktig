@@ -7,10 +7,10 @@
     using RapidTransit.Core.Services;
 
 
-    public class ImageRetrievalStateBusHost :
-        ServiceBusHost
+    public class ImageRetrievalStateBusInstance :
+        ServiceBusInstance
     {
-        public ImageRetrievalStateBusHost(IConfigurationProvider configuration, ImageRetrievalStateMachine machine,
+        public ImageRetrievalStateBusInstance(IConfigurationProvider configuration, ImageRetrievalStateMachine machine,
             ISagaRepository<ImageRetrievalState> sagaRepository)
             : base(configuration, "ImageRetrievalTrackingQueueName", "ImageRetrievalTrackingConsumerLimit", 1)
         {

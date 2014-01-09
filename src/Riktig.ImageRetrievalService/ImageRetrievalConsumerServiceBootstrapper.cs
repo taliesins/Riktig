@@ -7,7 +7,7 @@
 
 
     public class ImageRetrievalConsumerServiceBootstrapper :
-        ServiceBusHostServiceBootstrapper
+        ServiceBusInstanceServiceBootstrapper
     {
         public ImageRetrievalConsumerServiceBootstrapper(ILifetimeScope lifetimeScope)
             : base(lifetimeScope, typeof(ImageRetrievalConsumerServiceBootstrapper))
@@ -21,8 +21,8 @@
             builder.RegisterType<RetrieveImageConsumer>()
                    .AsSelf();
 
-            builder.RegisterType<ImageRetrievalConsumerBusHost>()
-                   .As<IServiceBusHost>();
+            builder.RegisterType<ImageRetrievalConsumerBusInstance>()
+                   .As<IServiceBusInstance>();
 
             base.ConfigureLifetimeScope(builder);
         }
