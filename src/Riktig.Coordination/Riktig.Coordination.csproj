@@ -48,9 +48,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\RapidTransit\src\packages\MassTransit.2.9.5\lib\net40\MassTransit.dll</HintPath>
     </Reference>
+    <Reference Include="MassTransit.Courier">
+      <HintPath>..\packages\MassTransit.Courier.2.9.5\lib\net40-full\MassTransit.Courier.dll</HintPath>
+    </Reference>
+    <Reference Include="MassTransit.Scheduling">
+      <HintPath>..\packages\MassTransit.Scheduling.1.2.5\lib\net40-full\MassTransit.Scheduling.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\RapidTransit\src\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.2.4\lib\net30\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="RapidTransit.Core">
+      <HintPath>..\packages\RapidTransit.Core.0.1.0\lib\net45\RapidTransit.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,10 +83,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\RapidTransit\src\RapidTransit.Core\RapidTransit.Core.csproj">
-      <Project>{7a30c7b8-db42-4db3-ab21-8c4d8007c507}</Project>
-      <Name>RapidTransit.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Riktig.Contracts\Riktig.Contracts.csproj">
       <Project>{95f5f24a-e279-4269-a178-29f1eb561521}</Project>
       <Name>Riktig.Contracts</Name>

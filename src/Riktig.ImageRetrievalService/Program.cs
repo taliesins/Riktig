@@ -15,7 +15,7 @@
         {
             var configurator = new RapidTransitHostConfigurator<ImageRetrievalServiceBootstrapper>();
 
-            configurator.OnStarting += settings => ConfigureLog4Net();
+            ConfigureLog4Net();
 
             return (int)HostFactory.Run(configurator.Configure);
         }
