@@ -23,6 +23,8 @@ _ReSharper*
 *.orig
 *.user
 
+ImageCache
+
 packages
 
 TestResult.xml

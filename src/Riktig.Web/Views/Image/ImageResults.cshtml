@@ -1,0 +1,8 @@
+﻿@model Riktig.Web.Models.ImageResultsViewModel
+
+@foreach (var img in @Model.Images)
+{
+            <div>
+                <img src="/ImageCache/@Path.GetFileName(img.AbsolutePath)"/>
+            </div>
+}

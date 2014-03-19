@@ -70,7 +70,7 @@
         // POST: /Image/Create
 
         [HttpPost]
-        public async Task<ActionResult> GetImages(GetImagesViewModel model)
+        public async Task<ActionResult> RequestImages(GetImagesViewModel model)
         {
             try
             {
@@ -93,7 +93,7 @@
                         });
 
                 return await Task.WhenAll(requests)
-                                 .ContinueWith(tasks => { return Json(results); });
+                                 .ContinueWith(tasks => { return PartialView("ImageResults",new ImageResultsViewModel(results)); });
             }
             catch
             {

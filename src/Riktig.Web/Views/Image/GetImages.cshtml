@@ -7,7 +7,7 @@
 <h2>Request Image</h2>
 
 
-@using (Html.BeginForm("GetImages", "Image"))
+@using (Ajax.BeginForm("RequestImages", "Image", new AjaxOptions{ HttpMethod="POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "results"}))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -32,14 +32,27 @@
 }
 
 <div>
-    @Ajax.ActionLink("Dogs and Cats", "GetImages", new { SourceAddress = new[] { 
-    new Uri("http://i.imgur.com/Iroma7d.png"), new Uri("http://i.imgur.com/NK8eZUe.jpg") } }, new AjaxOptions { HttpMethod = "POST" })
+    @Ajax.ActionLink("Dogs and Cats", "RequestImages", new { 
+        SourceAddress = new[] 
+            { 
+                "http://i.imgur.com/Iroma7d.png", "http://i.imgur.com/NK8eZUe.jpg"
+            } 
+        }, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "results"
+            })
 </div>
 
 
 <div>
     <br/>
     @Html.ActionLink("Back to Pending Images", "Index")
+</div>
+
+<div id="results">
+    
 </div>
 
 @section Scripts {

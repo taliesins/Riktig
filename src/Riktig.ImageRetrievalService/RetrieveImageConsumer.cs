@@ -14,10 +14,16 @@
         Consumes<RetrieveImage>.Context
     {
         static readonly LogWriter _log = HostLogger.Get<RetrieveImageConsumer>();
+        readonly RetrieveImageSettings _settings;
+
+        public RetrieveImageConsumer(RetrieveImageSettings settings)
+        {
+            _settings = settings;
+        }
 
         public void Consume(IConsumeContext<RetrieveImage> context)
         {
-            var sourceAddress = context.Message.SourceAddress;
+            Uri sourceAddress = context.Message.SourceAddress;
 
             _log.DebugFormat("Retrieve Image: {0}", sourceAddress);
 
@@ -28,9 +34,13 @@
                     HttpResponseMessage response = client.GetAsync(sourceAddress).Result;
                     if (response.IsSuccessStatusCode)
                     {
-                        string localFileName = Path.GetFullPath(NewId.NextGuid().ToString());
-                        var contentLocation = response.Content.Headers.ContentLocation ?? sourceAddress;
-                        if (Path.HasExtension(contentLocation.AbsoluteUri))
+                        string localFileName =
+                            Path.GetFullPath(Path.Combine(_settings.LocalImageCache, NewId.NextGuid().ToString()));
+                        Uri contentLocation = response.Content.Headers.ContentLocation ?? sourceAddress;
+                        if (response.Content.Headers.ContentDisposition != null && 
+                            Path.HasExtension(response.Content.Headers.ContentDisposition.FileName))
+                            localFileName += Path.GetExtension(response.Content.Headers.ContentDisposition.FileName);
+                        else if (Path.HasExtension(contentLocation.AbsoluteUri))
                             localFileName += Path.GetExtension(contentLocation.AbsoluteUri);
 
                         _log.DebugFormat("Success, copying to local file: {0}", localFileName);
@@ -101,6 +111,7 @@
             public Uri SourceAddress { get; private set; }
             public string Reason { get; private set; }
         }
+
 
         class ImageRetrievalFailedEvent :
             ImageRetrievalFailed

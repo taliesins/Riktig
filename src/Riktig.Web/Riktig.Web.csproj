@@ -183,6 +183,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\GetImagesViewModel.cs" />
+    <Compile Include="Models\ImageResultsViewModel.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -300,10 +301,12 @@
     <Content Include="Views\Image\RequestImage.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
     <Content Include="Views\Image\GetImages.cshtml" />
+    <Content Include="Views\Image\ImageResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
+    <Folder Include="ImageCache\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
