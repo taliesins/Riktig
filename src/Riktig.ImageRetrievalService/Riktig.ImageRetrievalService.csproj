@@ -85,14 +85,17 @@
     <Reference Include="RabbitMQ.Client">
       <HintPath>..\packages\RabbitMQ.Client.3.2.4\lib\net30\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="RapidTransit.Core">
-      <HintPath>..\packages\RapidTransit.Core.0.1.0\lib\net45\RapidTransit.Core.dll</HintPath>
+    <Reference Include="RapidTransit.Core, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RapidTransit.Core.1.1.0\lib\net45\RapidTransit.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RapidTransit.Integration">
-      <HintPath>..\packages\RapidTransit.Integration.0.1.0\lib\net45\RapidTransit.Integration.dll</HintPath>
+    <Reference Include="RapidTransit.Integration, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RapidTransit.Integration.1.1.0\lib\net45\RapidTransit.Integration.dll</HintPath>
     </Reference>
-    <Reference Include="RapidTransit.Integration.Services">
-      <HintPath>..\packages\RapidTransit.Integration.Services.0.1.0\lib\net45\RapidTransit.Integration.Services.dll</HintPath>
+    <Reference Include="RapidTransit.Integration.Services, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RapidTransit.Integration.Services.1.1.0\lib\net45\RapidTransit.Integration.Services.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -124,9 +127,6 @@
     </Content>
     <None Include="appSettings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="job_scheduling_data_2_0.xsd">
-      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

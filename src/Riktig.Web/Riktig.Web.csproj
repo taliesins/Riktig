@@ -22,7 +22,6 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,14 +87,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\RapidTransit\src\packages\RabbitMQ.Client.3.2.1\lib\net30\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="RapidTransit.Core">
-      <HintPath>..\packages\RapidTransit.Core.0.1.0\lib\net45\RapidTransit.Core.dll</HintPath>
+    <Reference Include="RapidTransit.Core, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RapidTransit.Core.1.1.0\lib\net45\RapidTransit.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RapidTransit.Integration">
-      <HintPath>..\packages\RapidTransit.Integration.0.1.0\lib\net45\RapidTransit.Integration.dll</HintPath>
+    <Reference Include="RapidTransit.Integration, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RapidTransit.Integration.1.1.0\lib\net45\RapidTransit.Integration.dll</HintPath>
     </Reference>
-    <Reference Include="RapidTransit.Integration.Web">
-      <HintPath>..\packages\RapidTransit.Integration.Web.0.1.0\lib\net45\RapidTransit.Integration.Web.dll</HintPath>
+    <Reference Include="RapidTransit.Integration.Web, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RapidTransit.Integration.Web.1.1.0\lib\net45\RapidTransit.Integration.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -163,9 +165,9 @@
     <Reference Include="Taskell">
       <HintPath>..\packages\Taskell.0.1.2\lib\net40\Taskell.dll</HintPath>
     </Reference>
-    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

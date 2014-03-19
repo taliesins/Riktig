@@ -15,7 +15,7 @@
         {
             var configurator = new RapidTransitHostConfigurator<CoordinationServiceBootstrapper>();
 
-            ConfigureLog4Net();
+            configurator.OnStarting += settings => ConfigureLog4Net();
 
             return (int) HostFactory.Run(configurator.Configure);
         }

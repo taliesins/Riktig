@@ -39,6 +39,7 @@
                             state.Created = DateTime.UtcNow;
                             state.FirstRequested = message.Timestamp;
                             state.SourceAddress = message.SourceAddress;
+                            state.LocalAddress = new Uri("urn:unknown");
                         })
                     .Then(() => _activityFactory.GetActivity<SendRetrieveImageCommandActivity, ImageRetrievalState>())
                     .Publish((_, message) => new ImageRequestedEvent(message.RequestId, message.SourceAddress))

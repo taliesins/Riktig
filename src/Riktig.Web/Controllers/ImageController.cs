@@ -78,23 +78,19 @@
 
                 var results = new ConcurrentBag<Uri>();
 
-                IEnumerable<Task> requests = model.SourceAddress
-                                                  .Where(
-                                                      x =>
-                                                      !string.IsNullOrEmpty(x)
-                                                      && Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute))
-                                                  .Select(address =>
-                                                      {
-                                                          return
-                                                              endpoint.SendRequestAsync(_bus,
-                                                                  new RequestImageCommand(new Uri(address)), x =>
-                                                                      {
-                                                                          x.Handle<ImageRequestCompleted>(
-                                                                              msg => { results.Add(msg.LocalAddress); });
-                                                                          x.Handle<ImageRequestFaulted>(msg => { });
-                                                                          x.HandleTimeout(30.Seconds(), () => { });
-                                                                      }).Task;
-                                                      });
+                IEnumerable<Task> requests = model
+                    .SourceAddress
+                    .Where(x => !string.IsNullOrEmpty(x) && Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute))
+                    .Select(address =>
+                        {
+                            return endpoint.SendRequestAsync(_bus,
+                                new RequestImageCommand(new Uri(address)), x =>
+                                    {
+                                        x.Handle<ImageRequestCompleted>(msg => results.Add(msg.LocalAddress));
+                                        x.Handle<ImageRequestFaulted>(msg => { });
+                                        x.HandleTimeout(30.Seconds(), () => { });
+                                    }).Task;
+                        });
 
                 return await Task.WhenAll(requests)
                                  .ContinueWith(tasks => { return Json(results); });
