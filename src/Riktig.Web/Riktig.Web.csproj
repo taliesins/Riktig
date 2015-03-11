@@ -46,7 +46,7 @@
     </Reference>
     <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\RapidTransit\src\packages\Autofac.3.3.0\lib\net40\Autofac.dll</HintPath>
+      <HintPath>..\packages\Autofac.3.3.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc5.3.2.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
@@ -56,14 +56,19 @@
     </Reference>
     <Reference Include="Automatonymous.MassTransitIntegration">
       <HintPath>..\packages\Automatonymous.MassTransit.1.2.5\lib\net40\Automatonymous.MassTransitIntegration.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Magnum, Version=2.1.2.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\RapidTransit\src\packages\Magnum.2.1.2\lib\NET40\Magnum.dll</HintPath>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.2.0\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="MassTransit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\RapidTransit\src\packages\MassTransit.2.9.5\lib\net40\MassTransit.dll</HintPath>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Magnum">
+      <HintPath>..\packages\Magnum.2.1.2\lib\NET40\Magnum.dll</HintPath>
+    </Reference>
+    <Reference Include="MassTransit">
+      <HintPath>..\packages\MassTransit.2.9.5\lib\net40\MassTransit.dll</HintPath>
     </Reference>
     <Reference Include="MassTransit.AutofacIntegration">
       <HintPath>..\packages\MassTransit.Autofac.2.9.5\lib\net40\MassTransit.AutofacIntegration.dll</HintPath>
@@ -71,32 +76,37 @@
     <Reference Include="MassTransit.Courier">
       <HintPath>..\packages\MassTransit.Courier.2.9.5\lib\net40-full\MassTransit.Courier.dll</HintPath>
     </Reference>
+    <Reference Include="MassTransit.QuartzIntegration">
+      <HintPath>..\packages\MassTransit.QuartzIntegration.1.2.5\lib\net40-full\MassTransit.QuartzIntegration.dll</HintPath>
+    </Reference>
     <Reference Include="MassTransit.Scheduling">
       <HintPath>..\packages\MassTransit.Scheduling.1.2.5\lib\net40-full\MassTransit.Scheduling.dll</HintPath>
     </Reference>
-    <Reference Include="MassTransit.Transports.RabbitMq, Version=2.9.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\RapidTransit\src\packages\MassTransit.RabbitMQ.2.9.5\lib\net40\MassTransit.Transports.RabbitMq.dll</HintPath>
+    <Reference Include="MassTransit.Transports.RabbitMq">
+      <HintPath>..\packages\MassTransit.RabbitMQ.2.9.5\lib\net40\MassTransit.Transports.RabbitMq.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\RapidTransit\src\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RabbitMQ.Client, Version=3.2.1.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\RapidTransit\src\packages\RabbitMQ.Client.3.2.1\lib\net30\RabbitMQ.Client.dll</HintPath>
+    <Reference Include="Quartz">
+      <HintPath>..\packages\Quartz.2.2.2\lib\net40\Quartz.dll</HintPath>
     </Reference>
-    <Reference Include="RapidTransit.Core, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.2.1\lib\net30\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="RapidTransit.Core">
       <HintPath>..\packages\RapidTransit.Core.1.1.0\lib\net45\RapidTransit.Core.dll</HintPath>
     </Reference>
-    <Reference Include="RapidTransit.Integration, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="RapidTransit.Integration">
       <HintPath>..\packages\RapidTransit.Integration.1.1.0\lib\net45\RapidTransit.Integration.dll</HintPath>
     </Reference>
-    <Reference Include="RapidTransit.Integration.Web, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="RapidTransit.Integration.Services">
+      <HintPath>..\packages\RapidTransit.Integration.Services.1.1.0\lib\net45\RapidTransit.Integration.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="RapidTransit.Integration.Web">
       <HintPath>..\packages\RapidTransit.Integration.Web.1.1.0\lib\net45\RapidTransit.Integration.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -164,6 +174,10 @@
     </Reference>
     <Reference Include="Taskell">
       <HintPath>..\packages\Taskell.0.1.2\lib\net40\Taskell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Topshelf">
+      <HintPath>..\packages\Topshelf.3.1.3\lib\net40-full\Topshelf.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -252,6 +266,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
